@@ -13,6 +13,11 @@ SOURCE_OF_TRUTH.md
 !skills/dbs-content-system/scaffold/root/CLAUDE.md
 !skills/dbs-content-system/scaffold/root/SOURCE_OF_TRUTH.md
 dist/
+releases/
+
+# 第三方渠道本地适配包（不发 GitHub）
+skillhub/
+workbuddy/
 
 # 知识库：只发 Skill 需要的部分
 知识库/legacy/

@@ -4,8 +4,8 @@
     "name": "dontbesilent2025"
   },
   "metadata": {
-    "description": "dontbesilent 商业诊断工具箱 — 从 12,307 条推文中提炼方法论，做成 21 个 Claude Code skill",
-    "version": "2.15.0"
+    "description": "dontbesilent 商业诊断工具箱 — 从 12,307 条推文中提炼方法论，做成 24 个 Claude Code skill",
+    "version": "2.15.1"
   },
   "plugins": [
     {
@@ -226,6 +226,25 @@
       ],
       "skills": [
         "./skills/dbs-ai-check"
+      ]
+    },
+    {
+      "name": "dbs-wechat-html",
+      "description": "微信公众号 HTML 生成。把 Markdown 转成可粘贴到微信公众号后台的 HTML，内置 15 种经典媒体/科技产品/中文公众号风格。",
+      "source": "./",
+      "strict": false,
+      "version": "1.0.0",
+      "category": "content-creation",
+      "keywords": [
+        "wechat",
+        "official-account",
+        "html",
+        "markdown",
+        "publishing",
+        "chinese"
+      ],
+      "skills": [
+        "./skills/dbs-wechat-html"
       ]
     },
     {

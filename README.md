@@ -1,10 +1,12 @@
 # dbskill
 
-dontbesilent 商业诊断工具箱。从 12,307 条推文中提炼方法论，做成 23 个 Agent skill。
+dontbesilent 商业诊断工具箱。从 12,307 条推文中提炼方法论，做成 24 个 Agent skill。
 
 可在 Claude Code、Codex、Cursor、Trae Solo 等任意支持 skill / system prompt 的 Agent 上使用。
 
-**最新更新：v2.15.0**
+**最新更新：v2.15.1**
+
+**v2.15.1 更新**：新增 `/dbs-wechat-html`——把 Markdown 转成可粘贴到微信公众号后台的 HTML，内置 15 种经典媒体/科技产品/中文公众号风格，支持推荐单风格、6 个预览、全量 15 个三种生成模式。
 
 **v2.15.0 更新**：集中导航逻辑。把 `/dbs` 升级为双模式路由器——任务前帮你找对工具，任务后读诊断结论推荐 2-3 个下一步。同时清理了 22 个 skill 末尾原来各自分散的"下一步建议"表，统一指向 `/dbs`，不知道下一步就回 `/dbs`。
 
@@ -48,7 +50,7 @@ npx -y skills add dontbesilent2025/dbskill -g --all
 
 #### Trae Solo
 
-Trae Solo 一个 zip 装一个 skill。从 [GitHub Releases](https://github.com/dontbesilent2025/dbskill/releases) 下载最新的 `dbskill-版本号.zip`，解压后里面是 23 个独立的 skill zip（每个 zip 解压后根级是 `SKILL.md`），逐个拖进 Trae Solo 的「上传技能」窗口即可。
+Trae Solo 一个 zip 装一个 skill。从 [GitHub Releases](https://github.com/dontbesilent2025/dbskill/releases) 下载最新的 `dbskill-版本号.zip`，解压后里面是 24 个独立的 skill zip（每个 zip 解压后根级是 `SKILL.md`），逐个拖进 Trae Solo 的「上传技能」窗口即可。
 
 如果想本地构建，运行 `bash tools/build-skills.sh`，产物在 `dist/skills/`。
 
@@ -95,6 +97,7 @@ npx -y skills add dontbesilent2025/dbskill -g --all
 | `/dbs-hook` | 短视频开头优化。诊断 + 生成方案 |
 | `/dbs-xhs-title` | 小红书标题公式。75 个爆款公式匹配 |
 | `/dbs-ai-check` | AI 写作特征识别。22 条特征扫描，只诊断不改 |
+| `/dbs-wechat-html` | 微信公众号 HTML 生成。15 种经典媒体/科技产品/中文公众号风格，支持推荐、预览和全量生成 |
 | `/dbs-slowisfast` | 慢就是快。摩擦建造资产，找到值得慢做的环节 |
 | `/dbs-action` | 执行力诊断。阿德勒框架（原 dbs-unblock） |
 | `/dbs-deconstruct` | 概念拆解。维特根斯坦式审查 |
