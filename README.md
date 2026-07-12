@@ -1,75 +1,187 @@
 # dbskill
 
-dontbesilent 商业诊断工具箱。从 12,307 条推文中提炼方法论，做成一组可组合使用的 Agent skill。
+把说不清的商业、内容与行动问题，变成能继续判断和行动的下一步。
 
-可在 Claude Code、Codex、Cursor、Trae Solo 等任意支持 skill / system prompt 的 Agent 上使用。
+dbskill 由自媒体博主 dontbesilent 创建，全网可搜 `@dontbesilent 聊赚钱`。dontbesilent 累计发布 16152 条推文，dbskill 将其中经过筛选的内容整理为 4176 个知识原子和 26 个 AI Skills。
 
-**最新更新：v2.17.0**
+适用于有真实业务问题的人：创业者、个体经营者、内容创作者、知识付费从业者，以及需要长期记录判断的人。
 
-**v2.17.0 更新**：统一 Agent 宿主 skill 根目录模型。`/dbs-bridge` 现在会同时处理 Claude Code（`~/.claude/skills`）、Codex（`~/.codex/skills`）、通用 Agents（`~/.agents/skills`，豆包 Mac App / Trae Solo / Codex 可读取）和 Grok（`~/.grok/skills`）；其中 Grok 会生成带 `user_invocable: true` 的薄 bridge。`/dbs-agent-migration` 和 `/dbs` 主入口也同步纳入 `~/.agents/skills` 与 Grok 的多端统一语境。
+**最新更新：v2.17.1**
 
-**v2.16.0 更新**：新增 `/dbs-script-flow`——短视频逐字稿逻辑延续检查。三个维度扫描：段落间逻辑衔接、段落内信息密度、句子口播流畅度，找出「观众会在哪一秒划走」的风险点。诊断完默认主动问是否做标记式改稿（保留原文，用删除线和 🆕 标出改动）。
+[新手从这里开始](docs/新手入门.md) · [查看全部 Skill](docs/新手入门.md#skill-全目录) · [安装 dbskill](#安装) · [关注作者](https://x.com/dontbesilent)
 
-**v2.15.1 更新**：新增 `/dbs-wechat-html`——把 Markdown 转成可粘贴到微信公众号后台的 HTML，内置 15 种经典媒体/科技产品/中文公众号风格，支持推荐单风格、6 个预览、全量 15 个三种生成模式。
+## 你可以用它做什么
 
-**v2.15.0 更新**：集中导航逻辑。把 `/dbs` 升级为双模式路由器——任务前帮你找对工具，任务后读诊断结论推荐 2-3 个下一步。同时清理了 22 个 skill 末尾原来各自分散的"下一步建议"表，统一指向 `/dbs`，不知道下一步就回 `/dbs`。
+| 你遇到的情况 | dbskill 会帮你做什么 |
+|---|---|
+| 有一个生意、产品或定价问题 | 拆清交易、客户、交付与风险，判断问题该从哪里解决 |
+| 想做内容却不知道从哪里开始 | 判断内容方向，处理开头、标题、共鸣、逻辑与发布排版 |
+| 想找对标，却不知道谁值得学 | 过滤噪音，找到能提供有效参照的对象 |
+| 知道该做什么，却总是拖着不动 | 分析行动卡点，区分目标、方法和执行上的问题 |
+| 有大量旧内容、案例或课件 | 建成可检索、可重组、可继续生长的内容资产工程 |
+| 需要长期追踪关键选择 | 保存诊断、回填结果、整理报告，沉淀个人决策记忆 |
 
-**v2.14.3 更新**：新增两个内容传播工具。`/dbs-spread` 传播心理解码——用 5 个经典传播学理论分析已有内容为什么能引起共鸣，输出受众情绪底层和聊天室讨论方向。`/dbs-resonate` 文稿共鸣诊断——写完文稿但心里没底时用，专门识别「写得全面但没刺中核心」的问题，给出具体删改建议。
+## 从第一次提问开始
 
-**v2.14.2 更新**：优化 `/dbs-chatroom` 的推荐人物规则。推荐专家时不再靠固定名单或泛名人直觉，改为先判断话题缺什么视角，再选择真正能推进讨论的人；同时明确排除泛财经、泛商业、靠表达和传播出名但判断密度偏弱的人。
+安装后，第一次使用直接输入：
 
-**v2.14.1 更新**：修复 `/dbs-content-system` 发布包缺少 `scaffold/root/AGENTS.md`、`CLAUDE.md`、`SOURCE_OF_TRUTH.md` 的问题。`v2.14.0` 新增了正式版内容结构化系统，本版本补齐初始化脚本依赖的根级脚手架文件。
+```text
+/dbs 新手入门
+```
 
-近期几次更新集中在 5 个方向：
-- 内容工程：新增内容结构化系统，支持把大量本地素材搭成可继续生长的内容资产工程
-- Agent 工作台迁移：支持 Grok Build 和 `~/.agents/skills`，统一多端迁移语境
-- 决策系统：从业务决策记录扩展成通用个人决策系统
-- 学习与提问：新增 `dbs-learning`、`dbs-good-question`
-- 状态管理：补齐 `dbs-save`、`dbs-restore`、`dbs-report`
+dbskill 会先了解你的实际情况，一次只问一个问题，再推荐合适的 Skill，并带你完成第一次实际使用。
 
-更完整的历史变更，见 [GitHub Releases](https://github.com/dontbesilent2025/dbskill/releases)。
+你也可以直接输入 `/dbs`，补全下面任意一句：
 
-**作者**：[X](https://x.com/dontbesilent) · [小红书](https://xhslink.com/m/637xuspR4iI) · [抖音](https://v.douyin.com/pRUDhpBqOrc/)
+```text
+我在做【什么】，现在卡在【哪里】。
+我想通过内容获得【什么结果】，但不知道该做什么。
+我看到【谁／什么案例】做得很好，想判断自己该不该学。
+我知道自己该做【什么】，但一直没开始，因为【什么】。
+```
 
-**所有内容开放，可以整套装，也可以只拿一部分。知识包、原子库、单个公理，都能单独用。**
+`/dbs` 会先读取当前对话里已有的信息，再把你带到合适的 Skill。需要完整示例、每个 Skill 的说明和组合用法时，阅读 [dbskill 新手入门](docs/新手入门.md)。
 
----
+已经知道要做什么时，可以直接调用：
 
-## 如何安装 dbskill
+```text
+/dbs-diagnosis 我做面向宝妈的收纳咨询，客户总觉得贵。我该降价还是换交付？
+/dbs-content 我想讲“普通人别急着做个人 IP”，这个选题怎么做？
+/dbs-hook 这是我短视频的前 20 秒，帮我优化开头：……
+/dbs-benchmark 我想研究做企业服务内容的账号，帮我找对标。
+```
 
-![demo](demo.gif)
+## 作者与答疑
 
-#### Claude Code
+作者：[X](https://x.com/dontbesilent) · [小红书](https://xhslink.com/m/637xuspR4iI) · [抖音](https://v.douyin.com/pRUDhpBqOrc/)
+
+如需加入付费答疑群，可扫描下方二维码，或直接打开 [查看答疑群](https://mp.weixin.qq.com/s/V7Dr0-75VYZOLJ6lbT_s0w)。
+
+![付费答疑群二维码](docs/paid-qa-group-qrcode.png)
+
+## 安装
+
+### Codex、Claude Code 与其他支持 Skills 的 Agent
+
+```bash
+npx -y skills add dontbesilent2025/dbskill -g --all
+```
+
+### Claude Code 插件市场
 
 ```bash
 claude plugin marketplace add dontbesilent2025/dbskill
 claude plugin install dbs@dontbesilent-skills
 ```
 
-#### 通用安装方式（适用于 Codex / Claude Code）
+![Claude Code 插件安装演示](demo.gif)
+
+本地构建时运行：
 
 ```bash
-npx -y skills add dontbesilent2025/dbskill -g --all
+bash tools/build-skills.sh
 ```
 
-#### Trae Solo
+产物位于 `dist/skills/`。构建脚本会跳过名称带 `beta` 的本地试验 Skill。
 
-Trae Solo 一个 zip 装一个 skill。从 [GitHub Releases](https://github.com/dontbesilent2025/dbskill/releases) 下载最新的 `dbskill-版本号.zip`，解压后里面是当前正式发布的独立 skill zip（每个 zip 解压后根级是 `SKILL.md`），逐个拖进 Trae Solo 的「上传技能」窗口即可。
+## 常用路径
 
-如果想本地构建，运行 `bash tools/build-skills.sh`，产物在 `dist/skills/`。脚本会自动跳过名字里带 `beta` 的本地试验版 skill。
+先按自己要推进的事情选择路径。实际使用中，后续步骤会根据前一步的结论调整。
 
-## 付费答疑群
+### 判断一个方向值不值得做
 
-如果你想加入我的付费答疑群，可以扫码查看：
+```text
+/dbs-diagnosis → /dbs-benchmark → /dbs-decision → /dbs-save
+```
 
-![付费答疑群二维码](docs/paid-qa-group-qrcode.png)
+诊断方向和商业模式，寻找能提供现实参照的对标，将判断和结果长期回填，再保存阶段结论。
 
-也可以直接打开这个链接：
-[https://mp.weixin.qq.com/s/V7Dr0-75VYZOLJ6lbT_s0w](https://mp.weixin.qq.com/s/V7Dr0-75VYZOLJ6lbT_s0w)
+### 从零开始做内容
 
-## 如何更新 dbskill
+```text
+/dbs → /dbs-content → /dbs-hook → /dbs-xhs-title → /dbs-script-flow
+```
 
-#### Claude Code 插件市场安装的用户
+先说清业务、受众和目标；确认内容方向；处理开头、标题和逐字稿衔接。
+
+### 写完内容到发布
+
+```text
+/dbs-resonate → /dbs-script-flow → /dbs-ai-check → /dbs-wechat-html
+```
+
+检查内容是否击中人、逻辑是否连贯、文字是否有明显 AI 痕迹，最后生成微信公众号排版 HTML。
+
+### 知道该做却一直做不动
+
+```text
+/dbs-action → /dbs-goal 或 /dbs-diagnosis → /dbs-slowisfast
+```
+
+先找到行动受阻的具体信号；再检查目标或方向；最后判断哪些摩擦值得长期承担。
+
+### 把旧内容变成资产
+
+```text
+/dbs-content-system → /dbs-content → /dbs-decision
+```
+
+将文稿、推文、选题、案例和课程稿搭成内容工程，再继续生产内容并记录关键判断。
+
+完整路径与每一步的输入示例见 [新手入门教程](docs/新手入门.md#常用组合路径)。
+
+## 直接调用的 Skill
+
+dbskill 当前正式发布 26 个 Skill。下面按用户目标列出入口；每个 Skill 的适用时机、输入示例、预期产出与衔接关系见 [完整 Skill 手册](docs/新手入门.md#skill-全目录)。
+
+| 目标 | 直接调用 |
+|---|---|
+| 不知道从哪里开始，或完成一轮工作后找下一步 | `/dbs` |
+| 判断生意、产品、定价或客户 | `/dbs-diagnosis` |
+| 找值得研究的对标 | `/dbs-benchmark` |
+| 诊断内容方向与做法 | `/dbs-content` |
+| 优化短视频开头、标题、文稿共鸣或逻辑 | `/dbs-hook`、`/dbs-xhs-title`、`/dbs-resonate`、`/dbs-script-flow` |
+| 分析内容为什么传播、检查 AI 写作痕迹 | `/dbs-spread`、`/dbs-ai-check` |
+| 生成微信公众号 HTML | `/dbs-wechat-html` |
+| 拆概念、审计目标、把问题写清楚 | `/dbs-deconstruct`、`/dbs-goal`、`/dbs-good-question` |
+| 处理拖延、贪快和行动受阻 | `/dbs-action`、`/dbs-slowisfast` |
+| 持续学习、决策回填与项目记忆 | `/dbs-learning`、`/dbs-decision`、`/dbs-save`、`/dbs-restore`、`/dbs-report` |
+| 把大量素材搭成内容资产工程 | `/dbs-content-system` |
+| 多视角讨论或奥派经济学讨论 | `/dbs-chatroom`、`/dbs-chatroom-austrian` |
+| 整理或桥接多端 Agent 工作台 | `/dbs-agent-migration`、`/dbs-bridge` |
+
+## 知识库
+
+项目公开了 4,176 条结构化知识原子、按 Skill 整理的方法论知识包和高频概念词典。你可以安装整套 Skill，也可以单独取用其中一部分。
+
+- 想了解字段、主题和数据范围，阅读 [原子库说明](知识库/原子库/README.md)。
+- 想做 RAG，将 `知识库/原子库/atoms.jsonl` 导入向量数据库。
+- 想给自己的 AI 加商业诊断能力，使用 `知识库/Skill知识包/diagnosis_公理与诊断框架.md` 作为系统提示词背景。
+- 想看方法论文档，浏览 [Skill 知识包](知识库/Skill知识包)。
+
+![Skill 联动图](docs/skill-link-map.svg)
+
+## 进阶使用
+
+### 存档、接续与报告
+
+对话关闭后，当前上下文不会自动保留。需要跨对话继续时：
+
+```text
+/dbs-save 训练营定价判断
+/dbs-restore
+/dbs-report
+```
+
+存档默认位于 `~/.dbs/sessions/{项目名}/`，报告默认位于 `~/.dbs/reports/{项目名}/`。完整规则见 [新手入门中的状态管理说明](docs/新手入门.md#行动学习与长期记录)。
+
+### 多端使用
+
+`/dbs-agent-migration` 可以审计并整理 Claude Code、Codex、Grok 与通用 Agents 的规则文件和 Skill 真源。`/dbs-bridge` 可将一个 Skill 或整个 `skills/` 目录桥接到这些 Agent。
+
+## 更新
+
+### Claude Code 插件市场安装
 
 ```bash
 claude plugin marketplace update dontbesilent-skills
@@ -77,270 +189,20 @@ claude plugin update dbs@dontbesilent-skills
 /reload-plugins
 ```
 
-#### 通过 `npx skills add` 安装的用户
+### 通过 `npx skills add` 安装
 
-重新运行一次同样的命令即可。安装和更新用的是同一条命令，不需要换成别的写法。
+重新运行安装命令：
 
 ```bash
 npx -y skills add dontbesilent2025/dbskill -g --all
 ```
 
----
-
-## 工具箱
-
-### dbs 诊断工具
-
-| Skill | 做什么 |
-|---|---|
-| `/dbs` | 主入口 + 导航中枢。任务前路由到对的工具；走完任何 skill 后输入 `/dbs`，它读诊断结论推荐 2-3 个下一步 |
-| `/dbs-diagnosis` | 商业模式诊断。消解问题，不回答问题 |
-| `/dbs-benchmark` | 对标分析。五重过滤，排除噪音 |
-| `/dbs-content` | 内容创作诊断。五维检测 |
-| `/dbs-content-system` | 内容结构化系统。把本地大量内容资产搭成一个可持续生长的内容工程 |
-| `/dbs-hook` | 短视频开头优化。诊断 + 生成方案 |
-| `/dbs-xhs-title` | 小红书标题公式。75 个爆款公式匹配 |
-| `/dbs-ai-check` | AI 写作特征识别。22 条特征扫描，只诊断不改 |
-| `/dbs-wechat-html` | 微信公众号 HTML 生成。15 种经典媒体/科技产品/中文公众号风格，支持推荐、预览和全量生成 |
-| `/dbs-slowisfast` | 慢就是快。摩擦建造资产，找到值得慢做的环节 |
-| `/dbs-action` | 执行力诊断。阿德勒框架（原 dbs-unblock） |
-| `/dbs-deconstruct` | 概念拆解。维特根斯坦式审查 |
-| `/dbs-goal` | 目标清晰化。把模糊目标审计成可检查的交付物 |
-| `/dbs-good-question` | 好问题生成器。把模糊问题改成 Agent 可推理、可批评、可验证的问题说明书 |
-| `/dbs-decision` | 个人决策系统。把任何长期跟踪的领域做成本地知识工程，四层结构 + 来源标签 + 隐私模式 |
-
-### 内容传播工具
-
-| Skill | 做什么 |
-|---|---|
-| `/dbs-spread` | 传播心理解码。用 5 个经典传播学理论分析已有内容为什么能引起共鸣，输出受众情绪底层和聊天室讨论方向 |
-| `/dbs-resonate` | 文稿共鸣诊断。写完文稿但心里没底时用，专门识别「写得全面但没刺中核心」的问题，给出具体删改建议 |
-| `/dbs-script-flow` | 逻辑延续检查。三维扫描逐字稿（段落衔接 / 信息密度 / 口播流畅度），找出「观众会在哪一秒划走」的风险点，支持标记式改稿 |
-
-### 学习工具
-
-| Skill | 做什么 |
-|---|---|
-| `/dbs-learning` 或 `/dbs-learn` | 交互式学习。把课题拆成连续文章，根据上一篇反馈生成下一篇 |
-
-### 状态管理三件套
-
-| Skill          | 做什么                                          |
-| -------------- | -------------------------------------------- |
-| `/dbs-save`    | 把当前诊断的关键结论、否决方向、推荐下一步存到本地。每次新增不覆盖            |
-| `/dbs-restore` | 拉出上次的存档，下次开新对话也能接着诊断              |
-| `/dbs-report`  | 把多次存档合并成一份带时间索引的 markdown 报告。可分享、可归档 |
-
-> **几个关键词**
-> - **存档**：`/dbs-save` 写到本地的一份诊断状态文件。每次 save 都新增一份，不会覆盖。一个项目下可以攒很多份存档，记录诊断从开始到收尾的全过程。
-> - **项目**：用来分隔不同生意的诊断。默认按你当前的目录名隔离——给小红书做的诊断和给线下课做的诊断不会混在一起。
-> - **接着上次**：你今天关掉 Claude Code，明天重开。只要还在同一个项目目录里 `/dbs-restore`，就会自动把上次的存档拉回来。
-
-诊断的存档默认放在 `~/.dbs/sessions/{项目名}/`，报告放在 `~/.dbs/reports/{项目名}/`。
-
-### 决策系统
-
-| Skill | 做什么 |
-|---|---|
-| `/dbs-decision` | 个人决策系统主入口。自动判断是更新状态、立案、回填还是出快照 |
-| `/决策立案` | 强制进入立案模式（建决策事件文件） |
-| `/结果回填` | 强制进入回填模式（事件结果落盘） |
-| `/状态画像` | 生成阶段快照 |
-
-决策项目默认放在 `~/.dbs/decisions/{项目名}/`，加 `--here` 或要求"放在当前项目里"则落到 `{当前目录}/决策/{项目名}/`。
-
-**四层结构**（每层规则不同）：
-
-- `01_事实/` —— 发生过什么。只追加。
-- `02_规律/` —— 看出什么。缓慢追加修正，原段不重写。
-- `03_定格/` —— 某时整体什么样。写完不改，新版本另起。
-- `04_待解/` —— 还没想清楚的（含决策事件）。完成即清。
-
-每层目录里放一个 `_这层放什么.md`，说明这个目录该记什么，常见误放项有哪些。
-
-**核心机制**：
-
-- `我的当前状态.md` 是第一入口，每次对话先读、对话结束先更新
-- 来源标签强制（`[本人]` / `[AI 推测]` / `[AI 结论]` / `[AI 关键标注]` / `[AI 元记录]` / `[结果回填]` / `[修正]`）
-- 概念升级 `02_规律/` 要满足 3 条门槛里的 2 条（出现 3 次 / 解释多事实 / 有工具性）
-- 隐私模式（init 时问一句决定是否开）：强制代号 + git 黑名单提示
-- "问什么办 → 拒方案 → 问新的"循环时 AI 停止给方案，写 `[AI 元记录]`
-
-### Agent 基建
-
-| Skill | 做什么 |
-|---|---|
-| `/dbs-agent-migration` | Agent 工作台迁移。把任意项目整理成 Claude Code / Codex / Grok / 通用 Agents 多端一致的 Agent 工作台：审计规则文件、识别真源、统一命名与 bridge |
-| `/dbs-bridge` | 多端 skill 桥接。把任意 skill 目录挂到 Claude Code、Codex、`~/.agents/skills` 和 Grok，改源目录后多端自动同步。支持单个 skill、集合目录、外部路径，以及拆桥和状态查看 |
-
-### chatroom 系列
-
-| Skill | 做什么 |
-|---|---|
-| `/dbs-chatroom-austrian` | 奥派经济聊天室。哈耶克 × 米塞斯 × Claude 三人对话 |
-| `/dbs-chatroom` | 定向聊天室。推荐专家或指定人物，多角色对话 + 判官总结 |
-
-### 工具路径图
-
-![Skill 联动图](docs/skill-link-map.svg)
-
-#### 常见主线
-
-```text
-diagnosis（方向对不对）
-    ↓
-benchmark（找谁模仿）
-    ↓
-content（内容怎么做）
-```
-
-#### 内容局部优化
-
-```text
-content 发现开头问题 → hook（开头怎么优化）
-content 需要标题 → xhs-title（标题公式）
-content 想检查 AI 味 → ai-check（AI 写作检测）
-```
-
-#### 横向工具
-
-```text
-goal（目标本身是空转的，无法驱动行动）
-slowisfast（任何关键决策阶段：当你在走捷径、贪快、绕开关键摩擦时）
-action（知道该做什么，但就是做不动）
-deconstruct（概念模糊，导致判断不成立）
-chatroom（想先听多个视角，再决定下一步）
-learning（把一个主题拆成连续学习文章，根据反馈继续推进）
-decision（把重大决策沉淀成长期资产，支持回填和规律复盘）
-```
-
-#### 交互式学习
-
-```text
-选一个课题
-    ↓
-生成 01.md，并留下学习反馈区
-    ↓
-用户写反馈
-    ↓
-learning 先读反馈，再生成 02.md
-    ↓
-持续形成自适应学习梯度
-```
-
-#### 状态管理（贯穿所有诊断）
-
-```text
-任何诊断 skill 走完有结论
-    ↓
-save（把结论、否决方向、下一步存档到本地）
-    ↓
-下次回来 → restore（把上次的存档拉回来，接着走）
-    ↓
-攒了多份存档 → report（合并出可分享的报告）
-```
-
-诊断走到「问题被消解」「报告输出」「行动方案确定」这类节点时，相关 skill 会主动建议你 `/dbs-save`。后面回来时一句「接着上次」或 `/dbs-restore` 就能继续，不用从头再讲一遍背景。
-
-不知道下一步走哪个 skill？输入 `/dbs`——它会读取你刚才的诊断结论，推荐 2-3 个值得走的下一步，每个都说清楚为什么。
-
----
-
-## 知识库
-
-dbskill 的知识库是完全开放的。你不需要安装整套 Skill 才能用——可以只拿走你需要的部分。
-
-### 目录结构
-
-```
-知识库/
-├── 原子库/                     # 结构化知识数据库
-│   ├── atoms.jsonl             # 4,176 个知识原子（全量）
-│   ├── atoms_2024Q4.jsonl      # 按季度拆分
-│   ├── atoms_2025Q1.jsonl
-│   ├── ...
-│   └── README.md               # 字段说明
-│
-├── Skill知识包/                 # 提炼后的方法论文档
-│   ├── diagnosis_公理与诊断框架.md
-│   ├── diagnosis_问题消解案例库.md
-│   ├── benchmark_对标方法论.md
-│   ├── benchmark_平台运营知识.md
-│   ├── content_内容创作方法论.md
-│   ├── content_平台特性与案例.md
-│   ├── action_心理诊断框架.md
-│   ├── action_信号案例库.md
-│   ├── deconstruct_语言与概念框架.md
-│   ├── deconstruct_解构案例库.md
-│   ├── decision_决策记录方法论.md
-│   └── decision_结构与回填规则.md
-│
-└── 高频概念词典.md
-```
-
-### 原子库是什么
-
-每个知识原子是一条从推文中提炼的知识点，结构化为 JSON：
-
-```json
-{
-  "id": "2024Q4_042",
-  "knowledge": "判断一个生意能不能做，必要条件之一是你能不能说出这个产品的颜色",
-  "original": "判断一个生意能不能做，必要条件之一是你能不能说出这个产品的颜色...",
-  "url": "https://x.com/dontbesilent/status/...",
-  "date": "2024-10-01",
-  "topics": ["商业模式与定价", "语言与思维"],
-  "skills": ["dbs-diagnosis", "dbs-deconstruct"],
-  "type": "anti-pattern",
-  "confidence": "high"
-}
-```
-
-**字段说明：**
-
-| 字段 | 说明 |
-|------|------|
-| `knowledge` | 提炼后的知识点 |
-| `original` | 推文原文（≤200 字） |
-| `topics` | 10 个主题分类（可多选） |
-| `skills` | 关联的 Skill |
-| `type` | principle / method / case / anti-pattern / insight / tool |
-| `confidence` | high / medium / low |
-
-### Skill 知识包是什么
-
-很多 Skill 都配有知识包——通常一份偏方法，一份偏案例。它们是公开的方法论文档，可以单独阅读，也可以作为后续维护时的背景材料。
-
-如果你不安装 Skill，也可以直接读这些 .md 文件。它们是独立的、可读的方法论文档。
-
-### 怎么在你自己的项目里用
-
-**场景 1：给你的 AI 加商业诊断能力**
-
-把 `知识库/Skill知识包/diagnosis_公理与诊断框架.md` 的内容粘贴到你的 system prompt 里。你的 AI 就有了 6 公理 + 消解漏斗。
-
-**场景 2：做 RAG 知识库**
-
-把 `知识库/原子库/atoms.jsonl` 导入你的向量数据库。4,176 条结构化知识点，自带主题标签，天然适合检索。
-
-**场景 3：只要案例**
-
-只看 `type: "case"` 或 `type: "anti-pattern"` 的原子。大约 700+ 条真实商业案例和反面案例。
-
-**场景 4：做 chatbot**
-
-用 Skill 知识包里的方法论作为 system prompt，用原子库做 RAG 增强。不需要安装 Claude Code。
-
-**场景 5：学习和研究**
-
-按 `topics` 过滤，只看你感兴趣的领域。比如 `topics` 包含 `"心理与执行力"` 的有 296 条。
-
----
+版本变更见 [GitHub Releases](https://github.com/dontbesilent2025/dbskill/releases)。当前版本：`v2.17.1`。
 
 ## 许可证
 
 本项目采用 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) 许可证。
 
-- 个人使用、学习、研究、非商业项目：不需要署名，不需要申请
-- 公开发布衍生作品（文章、工具、课程等）：请注明来源
-- 商业用途：需要单独授权，请联系作者
+- 个人使用、学习、研究、非商业项目：不需要署名，不需要申请。
+- 公开发布衍生作品（文章、工具、课程等）：请注明来源。
+- 商业用途：需要单独授权，请联系作者。

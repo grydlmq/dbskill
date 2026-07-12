@@ -4,8 +4,8 @@
     "name": "dontbesilent2025"
   },
   "metadata": {
-    "description": "dontbesilent 商业诊断工具箱 — 从 12,307 条推文中提炼方法论，做成 26 个 Claude Code skill",
-    "version": "2.17.0"
+    "description": "dontbesilent 商业诊断工具箱 — 将累计推文中经过筛选的内容整理为 4176 个知识原子和 26 个 Claude Code skill",
+    "version": "2.17.1"
   },
   "plugins": [
     {
