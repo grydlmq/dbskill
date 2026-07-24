@@ -4,7 +4,7 @@
 
 > 面向创业者与内容创作者的中文 AI Skills 工具箱。把真实业务、内容与行动问题交给 Agent，获得清晰判断和可以立刻执行的下一步。
 
-[![Version](https://img.shields.io/badge/version-2.18.10-2563EB.svg?style=flat-square)](VERSION)
+[![Version](https://img.shields.io/badge/version-2.18.11-2563EB.svg?style=flat-square)](VERSION)
 [![skills.sh](https://skills.sh/b/dontbesilent2025/dbskill)](https://skills.sh/dontbesilent2025/dbskill)
 [![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-16A34A.svg?style=flat-square)](LICENSE)
 
@@ -12,7 +12,7 @@
 
 dbskill 由 [dontbesilent](https://x.com/dontbesilent) 创建。从 16,152 条公开推文中筛选、结构化出 4,176 个知识原子，并将其中的方法沉淀为 29 个可直接调用的 Skills。
 
-**v2.18.10 更新：** README 动态路由图改用新的横版 4:3 SVG 文件名，绕过 GitHub 对旧图片地址的缓存；路由契约检查同步验证新文件，防止图示比例与 README 引用再次脱节。
+**v2.18.11 更新：** 重新设计 README 的单步路由图与知识来源图，统一为横版 4:3、蓝灰配色和同一套字体、圆角与线条规范；知识来源图同步更新为 16,152 条公开推文、4,176 个知识原子、29 个正式业务 Skill 和 1 个系统更新入口。
 
 [快速开始](#快速开始) · [安装](#安装) · [能力一览](#能力一览) · [公开推文集](#公开推文集) · [完整使用手册](docs/新手入门.md) · [更新日志](https://github.com/dontbesilent2025/dbskill/releases)
 
