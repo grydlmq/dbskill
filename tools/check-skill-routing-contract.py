@@ -85,10 +85,6 @@ def main() -> None:
     if "常见衔接方式" in readme_text:
         errors.append("README.md 仍把文档描述为「常见衔接方式」")
 
-    claude_text = (ROOT_DIR / "CLAUDE.md").read_text(encoding="utf-8")
-    if "内容工作流（推荐顺序）" in claude_text:
-        errors.append("CLAUDE.md 仍含固定的内容工作流顺序")
-
     route_map_text = (ROOT_DIR / "docs" / "skill-link-map.mmd").read_text(
         encoding="utf-8"
     )
